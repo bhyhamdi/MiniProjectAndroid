@@ -1,6 +1,5 @@
 package com.example.miniprojectandroid;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,8 +26,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     TextView cityName;
@@ -82,15 +78,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // progressBar.setVisibility(View.INVISIBLE);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         progressBar = findViewById(R.id.progressBar);
         graph = findViewById(R.id.ghraphe);
         langeurpanneau= findViewById(R.id.langeurpanneau);
         largeurpanneau= findViewById(R.id.largeurpannaeu);
         cal= findViewById(R.id.pEsmiet);
+
+
         graph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //buuton esmter clicked
+
         cal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,12 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 else{
                  progressBar.setVisibility(View.VISIBLE);
 
-
-//                    progressBar = new ProgressDialog(MainActivity.this);
-//                    progressBar.setCancelable(true);
-//                    progressBar.setMessage("File downloading ...");
-//                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//                    progressBar.show();
 
 
                     test = true;
@@ -168,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
                         y.add( 1000*((langeur * largeur)/10000) *pourcentageciel(array.getJSONObject(i).getJSONArray("weather").getJSONObject(0).getString("description")) );
 
                     }
-                    Log.d("listY ----------------", y.toString());
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, t);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -178,13 +170,13 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             x = dates.getSelectedItemPosition();
-                            Log.d("indes clicker ---: ", String.valueOf(x));
                             try {
                                 temperatuer = (float) (Float.parseFloat(array.getJSONObject(x).getJSONObject("main").getString("temp"))- 273.15);
 
                                 resulta.setText("Temparature : " +String.valueOf( temperatuer) + " °C\n");
                                 desc= array.getJSONObject(x).getJSONArray("weather").getJSONObject(0).getString("description");
                                 resulta.append("Description : " + array.getJSONObject(x).getJSONArray("weather").getJSONObject(0).getString("description") + "\n");
+                                resulta.append("Puissance: " + 1000 * ((langeur * largeur) / 10000) * pourcentageciel(array.getJSONObject(x).getJSONArray("weather").getJSONObject(0).getString("description")));
                                 String s = array.getJSONObject(x).getJSONArray("weather").getJSONObject(0).getString("description");
 
                             } catch (JSONException e) {
@@ -203,8 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-               // progressBar.setVisibility(View.GONE);
-                  //  progressBar.dismiss();
+
                 }
             }
         });
@@ -229,6 +220,8 @@ public class MainActivity extends AppCompatActivity {
                 return (float) 0.6;
             case "light rain":
                 return (float) 0.65;
+            case "moderate rain":
+                return (float) 0.55;
             case "rain":
                 return (float) 0.5;
             case "thunderstorm":

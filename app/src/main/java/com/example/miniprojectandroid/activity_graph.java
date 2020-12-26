@@ -26,13 +26,11 @@ public class activity_graph extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         t = b.getStringArrayList("listX");
         y = b.getFloatArray("listeY");
-String s ="";
+        String s ="";
         for (int i = 0; i < y.length; i++) {
             s+= String.valueOf(y[i])+"  ";
         }
 
-        Log.d("-*-*-*-*-*-yyyyyy",s);
-            Log.d("-*-*-*-*-*-t",String.valueOf(t.size()));
 
 
         for (int i = 0; i < t.size(); i++) {
@@ -42,13 +40,7 @@ String s ="";
         graph.setTitle("precision de puissance  entrante sur 5 jour  ") ;
         graph.getViewport().setXAxisBoundsManual(true);
 
-        // int  y ;
 
-//        for (int i =0;i<t.size();i++){
-//            y = i;
-//            series.appendData(new DataPoint(t.get(i), i), true , 50 );
-//        }
-        //
 
 
     }
